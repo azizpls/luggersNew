@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.luggerz_jovon.R;
+import com.example.luggerz_jovon.Welcome;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,7 +42,7 @@ public class ProfileFragment extends Fragment {
 
     private EditText mNameField, mPhoneField;
 
-    private Button mBack, mConfirm;
+    private Button mBack, mConfirm, mLogout;
 
     private ImageView mProfileImage;
 
@@ -67,10 +69,12 @@ public class ProfileFragment extends Fragment {
         mNameField = (EditText) view.findViewById(R.id.name);
         mPhoneField = (EditText) view.findViewById(R.id.phone);
 
-        mProfileImage = (ImageView) view.findViewById(R.id.profileImage);
+        mProfileImage = (ImageView) view.findViewById(R.id.itemImage);
 
         mBack = (Button) view.findViewById(R.id.back);
-        mConfirm = (Button) view.findViewById(R.id.confirm);
+        mConfirm = (Button) view.findViewById(R.id.btnSubmit);
+        mLogout = (Button) view.findViewById(R.id.logout);
+
 
         mAuth = FirebaseAuth.getInstance();
         userID = mAuth.getCurrentUser().getUid();
@@ -87,6 +91,17 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        mLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getContext(), Welcome.class);
+                startActivity(intent);
+                getActivity().finish();
+                return;
+            }
+        });
+
         mConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,8 +112,7 @@ public class ProfileFragment extends Fragment {
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().popBackStack();
-          //      finish();
+                getActivity().finish();
                 return;
             }
         });
@@ -159,9 +173,9 @@ public class ProfileFragment extends Fragment {
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    getActivity().getSupportFragmentManager().popBackStack();
 
-                    //finish();
+                    getActivity().finish();
+
                     return;
                 }
             });
@@ -173,15 +187,15 @@ public class ProfileFragment extends Fragment {
                     Map newImage = new HashMap();
                     newImage.put("profileImageUrl", downloadUrl.toString());
                     mCustomerDatabase.updateChildren(newImage);
+                    Toast.makeText(getContext(), "Update Successful!", Toast.LENGTH_SHORT).show();
+                    getActivity().finish();
 
-                    getActivity().getSupportFragmentManager().popBackStack();
-                    //finish();
                     return;
                 }
             });
         }else{
-            getActivity().getSupportFragmentManager().popBackStack();
-            //finish();
+            getActivity().finish();
+
         }
 
     }

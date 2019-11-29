@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20sp">
+    <ImageView
+        android:layout_width="200sp"
+        android:layout_height="200sp"
+        android:id="@+id/itemImage"
+        android:src="@mipmap/ic_default_box_foreground"
+        android:layout_gravity="center"
+        />
+    <EditText
+        android:id="@+id/etLugDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:hint="Date"
+        android:layout_marginBottom="20sp"/>
+    <EditText
+        android:id="@+id/etLugTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:hint="Time"
+        android:layout_marginBottom="20sp"
+        android:inputType="number"/>
+    <EditText
+        android:id="@+id/etLugPickup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:hint="Pickup Location"
+        android:layout_marginBottom="20sp"/>
+    <EditText
+        android:id="@+id/etLugDestination"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:hint="Destination"
+        android:layout_marginBottom="20sp"/>
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioGroup"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/LuggerX"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LuggerX" />
+
+        <RadioButton
+            android:id="@+id/LuggerXL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LuggerXL" />
+
+        <RadioButton
+            android:id="@+id/LuggerXXL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LuggerXXL" />
+    </RadioGroup>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnSubmit"
+        android:text="Submit"
+        android:background="@drawable/white_button_rounded"
+        android:textColor="#1976D2"
+        />
+
+
+
+</LinearLayout>

@@ -6,7 +6,7 @@
     <ImageView
         android:layout_width="100sp"
         android:layout_height="100sp"
-        android:id="@+id/profileImage"
+        android:id="@+id/itemImage"
         android:src="@mipmap/ic_default_user"
         android:layout_marginBottom="20sp"/>
     <EditText
@@ -24,10 +24,11 @@
         android:hint="Phone"
         android:layout_marginBottom="20sp"
         android:inputType="number"/>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/confirm"
+        android:id="@+id/btnSubmit"
         android:text="confirm"
         android:background="@drawable/white_button_rounded"
         android:textColor="#1976D2"
@@ -37,6 +38,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/back"
         android:text="back"
+        android:background="@drawable/white_button_rounded"
+        android:textColor="#1976D2"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/logout"
+        android:text="logout"
         android:background="@drawable/white_button_rounded"
         android:textColor="#1976D2"
         />
