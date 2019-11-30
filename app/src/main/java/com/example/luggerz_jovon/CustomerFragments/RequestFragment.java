@@ -8,13 +8,19 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.luggerz_jovon.Lugs;
 import com.example.luggerz_jovon.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RequestFragment extends Fragment {
 
@@ -22,17 +28,30 @@ public class RequestFragment extends Fragment {
 
 
     private ImageView itemImage;
-    private EditText etLugDate, etLugTime, etLugPickup, etLugDestination;
+    private EditText etLugDate, etLugTime, etLugPickup, etLugDestination, etLugItemDescription;
     private RadioGroup mRadioGroup;
     private Button btnSubmit;
+
+    private String userID, requestService;
+    private String pStatus = "Open";
+
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener firebaseAuthListener;
+    private DatabaseReference lugDatabase;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_request, container, false);
+       return inflater.inflate(R.layout.fragment_request, container, false);
 
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //TODO: Implement Image post feature
         itemImage = view.findViewById(R.id.itemImage);
-
+        etLugItemDescription = view.findViewById(R.id.etLugItemDescription);
         etLugDate = view.findViewById(R.id.etLugDate);
         etLugTime = view.findViewById(R.id.etLugTime);
         etLugPickup = view.findViewById(R.id.etLugPickup);
@@ -41,13 +60,73 @@ public class RequestFragment extends Fragment {
 
 
 
-
-        mRadioGroup = (RadioGroup) view.findViewById(R.id.radioGroup);
+        mRadioGroup = view.findViewById(R.id.radioGroup);
         mRadioGroup.check(R.id.LuggerX);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        
-        return view;
+
+
+        int selectId = mRadioGroup.getCheckedRadioButtonId();
+
+        final RadioButton radioButton = view.findViewById(selectId);
+
+        //getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+
+        mAuth = FirebaseAuth.getInstance();
+
+        firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+            }
+        };
+
+        mAuth = FirebaseAuth.getInstance();
+        userID = mAuth.getCurrentUser().getUid();
+        lugDatabase = FirebaseDatabase.getInstance().getReference().child("lugs").child(userID);
+
+
+
+
+
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+
+                if (radioButton.getText() == null){
+                    return;
+                }
+
+
+                String customerId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
+                Lugs lugs = new Lugs(
+                        etLugItemDescription.getText().toString(),
+                        etLugDate.getText().toString(),
+                        etLugTime.getText().toString(),
+                        etLugPickup.getText().toString(),
+                        etLugDestination.getText().toString(),
+                        requestService = radioButton.getText().toString(),
+                        pStatus, customerId);
+
+                addLug(lugs);
+
+            }
+        });
+
     }
 
+    private void addLug(Lugs lugs) {
+        FirebaseDatabase lugDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = lugDatabase.getReference("lugs").push();
+
+        myRef.setValue(lugs);
+
+
+    }
 
 }

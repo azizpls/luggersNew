@@ -12,6 +12,13 @@
         android:layout_gravity="center"
         />
     <EditText
+        android:id="@+id/etLugItemDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:hint="Item Description"
+        android:layout_marginBottom="20sp"/>
+    <EditText
         android:id="@+id/etLugDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
