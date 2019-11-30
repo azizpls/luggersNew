@@ -31,10 +31,12 @@ import java.util.ArrayList;
 
 public class MyLugsFragment extends Fragment {
 
-    DatabaseReference reference;
+    DatabaseReference lugReference;
     RecyclerView recyclerView;
     ArrayList<Lugs> list;
     MyLugAdapter adapter;
+    private FirebaseAuth mAuth;
+
 
     @Nullable
     @Override
@@ -45,16 +47,22 @@ public class MyLugsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        String customerId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
 
         recyclerView = view.findViewById(R.id.list_mylugs);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         list = new ArrayList<Lugs>();
 
-        reference = FirebaseDatabase.getInstance().getReference().child("lugs");
-        reference.addValueEventListener(new ValueEventListener() {
+        lugReference = FirebaseDatabase.getInstance().getReference().child("lugs");
+
+        //Attempting to filter by customerId
+        Query query = lugReference.orderByChild("customerId").equalTo(customerId);
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     Lugs l = dataSnapshot1.getValue(Lugs.class);
                     list.add(l);
                 }
@@ -65,8 +73,27 @@ public class MyLugsFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(getContext(), "Ooops.....something is wrong", Toast.LENGTH_SHORT).show();
+
             }
         });
+
+
+//        lugReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+//                    Lugs l = dataSnapshot1.getValue(Lugs.class);
+//                    list.add(l);
+//                }
+//                adapter = new MyLugAdapter(getContext(), list);
+//                recyclerView.setAdapter(adapter);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                Toast.makeText(getContext(), "Ooops.....something is wrong", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
     }
 
