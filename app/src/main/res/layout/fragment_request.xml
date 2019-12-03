@@ -18,21 +18,24 @@
         android:background="@null"
         android:hint="Item Description"
         android:layout_marginBottom="20sp"/>
+
     <EditText
         android:id="@+id/etLugDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20sp"
         android:background="@null"
         android:hint="Date"
-        android:layout_marginBottom="20sp"/>
+        android:inputType="date" />
+
     <EditText
         android:id="@+id/etLugTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20sp"
         android:background="@null"
         android:hint="Time"
-        android:layout_marginBottom="20sp"
-        android:inputType="number"/>
+        android:inputType="time" />
     <EditText
         android:id="@+id/etLugPickup"
         android:layout_width="match_parent"

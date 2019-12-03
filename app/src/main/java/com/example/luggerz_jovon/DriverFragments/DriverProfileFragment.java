@@ -1,4 +1,4 @@
-package com.example.luggerz_jovon.CustomerFragments;
+package com.example.luggerz_jovon.DriverFragments;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -38,8 +38,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProfileFragment extends Fragment {
-
+public class DriverProfileFragment extends Fragment {
     private EditText mNameField, mPhoneField;
 
     private Button mBack, mConfirm, mLogout;
@@ -47,7 +46,7 @@ public class ProfileFragment extends Fragment {
     private ImageView mProfileImage;
 
     private FirebaseAuth mAuth;
-    private DatabaseReference mCustomerDatabase;
+    private DatabaseReference mDriverDatabase;
 
     private String userID;
     private String mName;
@@ -77,7 +76,7 @@ public class ProfileFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         userID = mAuth.getCurrentUser().getUid();
-        mCustomerDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userID);
+        mDriverDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(userID);
 
         getUserInfo();
 
@@ -113,7 +112,7 @@ public class ProfileFragment extends Fragment {
 
     }
     private void getUserInfo(){
-        mCustomerDatabase.addValueEventListener(new ValueEventListener() {
+        mDriverDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists() && dataSnapshot.getChildrenCount()>0){
@@ -148,7 +147,7 @@ public class ProfileFragment extends Fragment {
         Map userInfo = new HashMap();
         userInfo.put("name", mName);
         userInfo.put("phone", mPhone);
-        mCustomerDatabase.updateChildren(userInfo);
+        mDriverDatabase.updateChildren(userInfo);
 
         if(resultUri != null) {
 
@@ -181,7 +180,7 @@ public class ProfileFragment extends Fragment {
 
                     Map newImage = new HashMap();
                     newImage.put("profileImageUrl", downloadUrl.toString());
-                    mCustomerDatabase.updateChildren(newImage);
+                    mDriverDatabase.updateChildren(newImage);
                     Toast.makeText(getContext(), "Update Successful!", Toast.LENGTH_SHORT).show();
                     getActivity().finish();
 
@@ -204,6 +203,4 @@ public class ProfileFragment extends Fragment {
             mProfileImage.setImageURI(resultUri);
         }
     }
-
 }
-

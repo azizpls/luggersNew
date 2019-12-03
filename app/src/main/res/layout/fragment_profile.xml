@@ -33,14 +33,7 @@
         android:background="@drawable/white_button_rounded"
         android:textColor="#1976D2"
         />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/back"
-        android:text="back"
-        android:background="@drawable/white_button_rounded"
-        android:textColor="#1976D2"
-        />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

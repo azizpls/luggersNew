@@ -52,6 +52,39 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="Destination" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/acceptLug"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/blue_button_rounded"
+                android:fontFamily="@font/roboto"
+                android:text="Accept"
+                android:textAlignment="center"
+                android:visibility="invisible"
+                android:textColor="#FFFFFF"></Button>
+
+            <Button
+                android:id="@+id/cancelLug"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginBottom="60dp"
+                android:background="@drawable/white_button_rounded"
+                android:fontFamily="@font/roboto"
+                android:text="Cancel"
+                android:textColor="#1976D2"
+                android:textAlignment="center"
+                android:visibility="invisible"
+                ></Button>
+
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,8 +20,14 @@ import com.example.luggerz_jovon.Lugs;
 import com.example.luggerz_jovon.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RequestFragment extends Fragment {
 
@@ -37,7 +44,7 @@ public class RequestFragment extends Fragment {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
-    private DatabaseReference lugDatabase;
+    private DatabaseReference lugDatabase, historyLugId;
 
     @Nullable
     @Override
@@ -68,25 +75,6 @@ public class RequestFragment extends Fragment {
 
         final RadioButton radioButton = view.findViewById(selectId);
 
-        //getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
-
-        mAuth = FirebaseAuth.getInstance();
-
-        firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-            }
-        };
-
-        mAuth = FirebaseAuth.getInstance();
-        userID = mAuth.getCurrentUser().getUid();
-        lugDatabase = FirebaseDatabase.getInstance().getReference().child("lugs").child(userID);
-
-
-
 
 
 
@@ -102,6 +90,13 @@ public class RequestFragment extends Fragment {
 
 
                 String customerId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                String driverId = "";
+
+                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                String lugId = firebaseDatabase.getReference().child("lugs").push().getKey();
+
+
+
 
 
                 Lugs lugs = new Lugs(
@@ -111,7 +106,7 @@ public class RequestFragment extends Fragment {
                         etLugPickup.getText().toString(),
                         etLugDestination.getText().toString(),
                         requestService = radioButton.getText().toString(),
-                        pStatus, customerId);
+                        pStatus, customerId, driverId, lugId);
 
                 addLug(lugs);
 
@@ -125,6 +120,10 @@ public class RequestFragment extends Fragment {
         DatabaseReference myRef = lugDatabase.getReference("lugs").push();
 
         myRef.setValue(lugs);
+        myRef.child("lugId").setValue(myRef.getKey());
+
+        Toast.makeText(getContext(), "Lug Requested!", Toast.LENGTH_SHORT).show();
+
 
 
     }

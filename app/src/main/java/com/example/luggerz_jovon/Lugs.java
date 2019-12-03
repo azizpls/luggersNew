@@ -10,10 +10,14 @@ public class Lugs {
     private String serviceType;
     private String status;
     private String customerId;
+    private String driverId;
+    private String lugId;
 
 
 
-    public Lugs(String itemDescription, String date, String time, String pickupLocation, String destination, String serviceType, String status, String customerId) {
+
+    public Lugs(String itemDescription, String date, String time, String pickupLocation, String destination, String serviceType, String status, String customerId,
+                String driverId, String lugId) {
         this.itemDescription = itemDescription;
         this.date = date;
         this.time = time;
@@ -22,6 +26,9 @@ public class Lugs {
         this.serviceType = serviceType;
         this.status = status;
         this.customerId = customerId;
+        this.driverId = driverId;
+        this.lugId = lugId;
+
 
     }
 
@@ -88,6 +95,24 @@ public class Lugs {
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
+    public String getDriverId() {
+        return driverId;
+    }
+
+    public void setDriverId(String driverId) {
+        this.driverId = driverId;
+    }
+
+
+    public String getLugId() {
+        return lugId;
+    }
+
+    public void setLugId(String lugId) {
+        this.lugId = lugId;
+    }
+
+
 
     public Lugs() {
 

@@ -3,15 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_home"
+        android:id="@+id/action_driverHome"
         android:icon="@android:drawable/ic_menu_compass"
-        android:title="My Lugs"
+        android:title="Home"
         app:showAsAction="always" />
     <item
-        android:id="@+id/action_compose"
+        android:id="@+id/action_myLugs"
         android:icon="@android:drawable/ic_menu_edit"
-        android:title="Request"
+        android:title="My Lugs"
         app:showAsAction="always" />
+
+
     <item
         android:id="@+id/action_profile"
         android:icon="@drawable/ic_person_black_24dp"
